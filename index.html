@@ -3,39 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <title>CNN</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<h2>Hello OpenCV.js</h2>
-<div>
-    <div class="inputoutput">
-        <img id="imageSrc" alt="No Image"/>
-        <div class="caption">imageSrc <input type="file" id="fileInput" name="file"/></div>
-    </div>
-    <div class="inputoutput">
-        <canvas id="canvasOutput"></canvas>
-        <div class="caption">canvasOutput</div>
-    </div>
+<h2>Open Campus</h2>
+<div class="container">
+    <img id="imageSrc" alt="No Image" class="image"/>
+    <input type="file" id="fileInput" name="file" disabled/>
+    <canvas class="image" id="canvasOutput"></canvas>
 </div>
-<script src="https://docs.opencv.org/3.4.0/opencv.js" type="text/javascript"></script>
+
+<script async src="https://docs.opencv.org/3.4.0/opencv.js" onload="initializeClassifier();"
+        type="text/javascript"></script>
 <script src="detect-face.js" type="text/javascript"></script>
 <script type="text/javascript">
-    let imgElement = document.getElementById('imageSrc');
-    let inputElement = document.getElementById('fileInput');
-    inputElement.addEventListener('change', (e) => {
-        imgElement.src = URL.createObjectURL(e.target.files[0]);
-    }, false);
+    function initializeClassifier() {
+        console.log("CV loaded.")
+        document.querySelector('#fileInput').disabled = false;
+        let imgElement = document.getElementById('imageSrc');
+        let inputElement = document.getElementById('fileInput');
+        inputElement.addEventListener('change', (e) => {
+            imgElement.src = URL.createObjectURL(e.target.files[0]);
+        }, false);
 
-    const haarCascadeFile = "haarcascade_frontalface_default.xml"
-    loadDataFile(haarCascadeFile, haarCascadeFile).then(()=> {
-        let faceCascade = new cv.CascadeClassifier();
-        faceCascade.load(haarCascadeFile);
-        imgElement.onload = async function () {
-            let mat = cv.imread(imgElement);
-            const img = await detectHaarFace(mat, faceCascade)
-            cv.imshow('canvasOutput', img);
-            mat.delete()
-        };
-    })
+        const haarCascadeFile = "haarcascade_frontalface_default.xml"
+        loadDataFile(haarCascadeFile, haarCascadeFile).then(() => {
+            let faceCascade = new cv.CascadeClassifier();
+            faceCascade.load(haarCascadeFile);
+            imgElement.onload = async function () {
+                let mat = cv.imread(imgElement);
+                const img = await detectHaarFace(mat, faceCascade)
+                cv.imshow('canvasOutput', img);
+                mat.delete()
+            };
+        })
+    }
 
 
 </script>
