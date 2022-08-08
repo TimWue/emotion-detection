@@ -6,3 +6,9 @@
     display: flex;
     flex-direction: column;
 }
+
+.stream{
+    width:200px;
+    height:200px;
+    border: 5px gray;
+}

@@ -8,16 +8,20 @@
 <body>
 <h2>Open Campus</h2>
 <div class="container">
+    <div class="stream">
+        <video id="videoElement"></video>
+    </div>
     <img id="imageSrc" alt="No Image" class="image"/>
     <input type="file" id="fileInput" name="file" disabled/>
     <canvas class="image" id="canvasOutput"></canvas>
 </div>
 
-<script async src="https://docs.opencv.org/3.4.0/opencv.js" onload="initializeClassifier();"
+<script async src="https://docs.opencv.org/3.4.0/opencv.js" onload="initialize();"
         type="text/javascript"></script>
 <script src="detect-face.js" type="text/javascript"></script>
+<script src="camera.js" type="text/javascript"></script>
 <script type="text/javascript">
-    function initializeClassifier() {
+    function initClassifier(){
         console.log("CV loaded.")
         document.querySelector('#fileInput').disabled = false;
         let imgElement = document.getElementById('imageSrc');
@@ -37,6 +41,10 @@
                 mat.delete()
             };
         })
+    }
+    function initialize() {
+       initClassifier();
+       startCamera();
     }
 
 
