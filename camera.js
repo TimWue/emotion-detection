@@ -21,6 +21,9 @@ function startCamera(faceCascade) {
         navigator.mediaDevices.getUserMedia(constraints)
             .then(function (stream) {
                 video.srcObject = stream;
+                const streamSettings = stream.getVideoTracks()[0].getSettings();
+                videoOutput.width = streamSettings.width;
+                videoOutput.height = streamSettings.height;
             })
             .catch(function () {
                 console.log("Something went wrong!");
@@ -37,7 +40,7 @@ function startCamera(faceCascade) {
 
 async function takePhoto(faceCascade) {
     const context = videoOutput.getContext('2d');
-    context.drawImage(video, 0, 0, 160,120);
+    context.drawImage(video, 0, 0, videoOutput.width,videoOutput.height);
     videoOutput.toDataURL('image/png')
     let mat = cv.imread("canvasOutput");
     const imgWithFace = await detectHaarFace(mat, faceCascade)
