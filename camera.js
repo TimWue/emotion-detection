@@ -5,11 +5,8 @@ const video = document.querySelector("#videoElement");
 video.setAttribute("playsinline", "");
 video.setAttribute("autoplay", "");
 video.setAttribute("muted", "");
-video.style.width = "100%";
-video.style.height = "auto";
 
 function startCamera(faceCascade) {
-
 
     if (navigator.mediaDevices.getUserMedia) {
 
@@ -40,7 +37,7 @@ function startCamera(faceCascade) {
 
 async function takePhoto(faceCascade) {
     const context = videoOutput.getContext('2d');
-    context.drawImage(video, 0, 0, videoOutput.width, videoOutput.height);
+    context.drawImage(video, 0, 0, 160,120);
     videoOutput.toDataURL('image/png')
     let mat = cv.imread("canvasOutput");
     const imgWithFace = await detectHaarFace(mat, faceCascade)
