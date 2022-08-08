@@ -5,8 +5,8 @@ const video = document.querySelector("#videoElement");
 video.setAttribute("playsinline", "");
 video.setAttribute("autoplay", "");
 video.setAttribute("muted", "");
-video.style.width = "200px";
-video.style.height = "200px";
+video.style.width = "100%";
+video.style.height = "auto";
 
 function startCamera(faceCascade) {
 

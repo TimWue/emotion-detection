@@ -1,15 +1,16 @@
 .image{
-    width:200px;
-    height:200px;
+    width: 100%;
+    height: auto;
 }
 
 .container{
     display: flex;
     flex-direction: column;
+    width: 100%;
 }
 
 .stream{
-    width:200px;
-    height:200px;
+    width: 100%;
+    height: auto;
     border: 5px gray;
 }
