@@ -45,6 +45,5 @@ async function takePhoto(faceCascade) {
     hiddenCanvas.toDataURL('image/png')
     let mat = cv.imread("hiddenCanvas");
     const face = await detectHaarFace(mat, faceCascade)
-    console.log(face)
     face && cv.imshow('canvasOutput', face);
 }
