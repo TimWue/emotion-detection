@@ -30,15 +30,13 @@ function startCamera(faceCascade) {
                 console.log("Something went wrong!");
             });
 
-        photoButton.addEventListener('click', async function (evt) {
+        async function handleClickOrTouch(evt) {
             evt.preventDefault()
             await takePhoto(faceCascade)
-        });
+        }
 
-        photoButton.addEventListener('touchstart', async function (evt) {
-            evt.preventDefault()
-            await takePhoto(faceCascade)
-        });
+        photoButton.addEventListener('touchstart', handleClickOrTouch);
+        photoButton.addEventListener('click', handleClickOrTouch);
     }}
 
 async function takePhoto(faceCascade) {
