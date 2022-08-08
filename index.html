@@ -11,8 +11,7 @@
     <div class="stream">
         <video id="videoElement"></video>
     </div>
-    <img id="imageSrc" alt="No Image" class="image"/>
-    <input type="file" id="fileInput" name="file" disabled/>
+    <button id="takePhoto">Take Photo</button>
     <canvas class="image" id="canvasOutput"></canvas>
 </div>
 
@@ -23,28 +22,15 @@
 <script type="text/javascript">
     function initClassifier(){
         console.log("CV loaded.")
-        document.querySelector('#fileInput').disabled = false;
-        let imgElement = document.getElementById('imageSrc');
-        let inputElement = document.getElementById('fileInput');
-        inputElement.addEventListener('change', (e) => {
-            imgElement.src = URL.createObjectURL(e.target.files[0]);
-        }, false);
-
         const haarCascadeFile = "haarcascade_frontalface_default.xml"
         loadDataFile(haarCascadeFile, haarCascadeFile).then(() => {
             let faceCascade = new cv.CascadeClassifier();
             faceCascade.load(haarCascadeFile);
-            imgElement.onload = async function () {
-                let mat = cv.imread(imgElement);
-                const img = await detectHaarFace(mat, faceCascade)
-                cv.imshow('canvasOutput', img);
-                mat.delete()
-            };
+            startCamera(faceCascade)
         })
     }
     function initialize() {
        initClassifier();
-       startCamera();
     }
 
 

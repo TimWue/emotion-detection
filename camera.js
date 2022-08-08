@@ -1,4 +1,6 @@
-function startCamera() {
+function startCamera(faceCascade) {
+    const photoButton = document.querySelector("#takePhoto");
+    const videoOutput = document.querySelector("#canvasOutput");
     const video = document.querySelector("#videoElement");
     video.setAttribute("playsinline", "");
     video.setAttribute("autoplay", "");
@@ -23,5 +25,13 @@ function startCamera() {
             .catch(function () {
                 console.log("Something went wrong!");
             });
-    }}
 
+        photoButton.addEventListener('click', async function () {
+            const context = videoOutput.getContext('2d');
+            context.drawImage(video, 0, 0, videoOutput.width, videoOutput.height);
+            videoOutput.toDataURL('image/png')
+            let mat = cv.imread("canvasOutput");
+            const imgWithFace = await detectHaarFace(mat, faceCascade)
+            cv.imshow('canvasOutput', imgWithFace);
+        });
+    }}
