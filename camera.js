@@ -1,5 +1,6 @@
 
 const photoButton = document.querySelector("#takePhoto");
+const hiddenCanvas = document.querySelector("#hiddenCanvas");
 const videoOutput = document.querySelector("#canvasOutput");
 const video = document.querySelector("#videoElement");
 video.setAttribute("playsinline", "");
@@ -29,20 +30,23 @@ function startCamera(faceCascade) {
                 console.log("Something went wrong!");
             });
 
-        photoButton.addEventListener('click', async function () {
+        photoButton.addEventListener('click', async function (evt) {
+            evt.preventDefault()
             await takePhoto(faceCascade)
         });
 
-        photoButton.addEventListener('touchstart', async function () {
+        photoButton.addEventListener('touchstart', async function (evt) {
+            evt.preventDefault()
             await takePhoto(faceCascade)
         });
     }}
 
 async function takePhoto(faceCascade) {
-    const context = videoOutput.getContext('2d');
-    context.drawImage(video, 0, 0, videoOutput.width,videoOutput.height);
-    videoOutput.toDataURL('image/png')
-    let mat = cv.imread("canvasOutput");
-    const imgWithFace = await detectHaarFace(mat, faceCascade)
-    cv.imshow('canvasOutput', imgWithFace);
+    const context = hiddenCanvas.getContext('2d');
+    context.drawImage(video, 0, 0, hiddenCanvas.width,hiddenCanvas.height);
+    hiddenCanvas.toDataURL('image/png')
+    let mat = cv.imread("hiddenCanvas");
+    const face = await detectHaarFace(mat, faceCascade)
+    console.log(face)
+    face && cv.imshow('canvasOutput', face);
 }

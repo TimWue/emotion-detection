@@ -7,19 +7,24 @@ function detectHaarFace(img, faceCascade) {
     const faces = new cv.RectVector();
     faceCascade.detectMultiScale(gray, faces, 1.1, 3, 0, msize, msize);
 
-    for (let i = 0; i < faces.size(); ++i) {
+   /* for (let i = 0; i < faces.size(); ++i) {
         const point1 = new cv.Point(faces.get(i).x, faces.get(i).y);
         const point2 = new cv.Point(
             faces.get(i).x + faces.get(i).width,
             faces.get(i).y + faces.get(i).height
         );
         cv.rectangle(newImg, point1, point2, [255, 0, 0, 255]);
+    }*/
+    let dst = undefined;
+    if (faces.size() > 0) {
+        let rect = new cv.Rect(faces.get(0).x, faces.get(0).y, faces.get(0).width, faces.get(0).height);
+        dst = newImg.roi(rect);
     }
 
     gray.delete();
     faces.delete();
 
-    return newImg;
+    return dst;
 }
 
 async function loadDataFile(cvFilePath, url) {

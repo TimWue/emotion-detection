@@ -1,17 +1,25 @@
-body{
+body {
     margin: 0;
     padding: 0;
 }
-.image{
 
+.image {
 }
 
-.container{
+.container {
     display: flex;
     flex-direction: column;
-    border: 5px solid black;
+    align-items: center;
 }
 
-.stream{
-    border: 5px gray;
+#takePhoto{
+    width:100px;
+    height:50px;
+}
+
+.stream {
+}
+
+.hidden {
+    display: none;
 }
