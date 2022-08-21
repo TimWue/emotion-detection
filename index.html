@@ -8,24 +8,32 @@
 <body>
 <div class="container">
     <h1>Open Campus 2022</h1>
-
-    <video class="stream" id="videoElement" width="100%" ></video>
+    <video class="stream" id="videoElement" width="100%"></video>
     <button id="takePhoto">Detect face</button>
     <canvas class="hidden" id="hiddenCanvas" width="160" height="120"></canvas>
-    <canvas class="image" id="canvasOutput"></canvas>
+    <div class="classification">
+        <canvas class="image" id="canvasOutput"></canvas>
+        <div class="chart-container"    >
+        <canvas id="prediction"></canvas>
+        </div>
+    </div>
 </div>
 
 
 <script src="detect-face.js" type="text/javascript"></script>
 <script src="camera.js" type="text/javascript"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@3.19.0/dist/tf.min.js"></script>
+<script src="tensorflowStuff.js" type="text/javascript"></script>
 <script type="text/javascript">
     function initClassifier() {
         console.log("CV loaded.")
         const haarCascadeFile = "haarcascade_frontalface_default.xml"
-        loadDataFile(haarCascadeFile, haarCascadeFile).then(() => {
+        loadDataFile(haarCascadeFile, haarCascadeFile).then(async () => {
             let faceCascade = new cv.CascadeClassifier();
             faceCascade.load(haarCascadeFile);
-            startCamera(faceCascade)
+            const model = await initializeModel();
+
+            startCamera(faceCascade, model)
         })
     }
 
@@ -36,7 +44,8 @@
 
 </script>
 <script async src="https://docs.opencv.org/3.4.0/opencv.js" onload="initialize();" type="text/javascript"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js" type="text/javascript"></script>
+<script src="chartStuff.js" type="text/javascript"></script>
 
 </body>
 </html>
