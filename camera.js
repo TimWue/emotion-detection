@@ -7,7 +7,7 @@ video.setAttribute("playsinline", "");
 video.setAttribute("autoplay", "");
 video.setAttribute("muted", "");
 
-function startCamera(faceCascade, model) {
+function startCamera(faceCascade, model, chart) {
 
     if (navigator.mediaDevices.getUserMedia) {
 
@@ -32,14 +32,14 @@ function startCamera(faceCascade, model) {
 
         async function handleClickOrTouch(evt) {
             evt.preventDefault()
-            await takePhoto(faceCascade, model)
+            await takePhoto(faceCascade, model, chart)
         }
 
         photoButton.addEventListener('touchstart', handleClickOrTouch);
         photoButton.addEventListener('click', handleClickOrTouch);
     }}
 
-async function takePhoto(faceCascade, model) {
+async function takePhoto(faceCascade, model, chart) {
     const context = hiddenCanvas.getContext('2d');
     context.drawImage(video, 0, 0, hiddenCanvas.width,hiddenCanvas.height);
     hiddenCanvas.toDataURL('image/png')
@@ -47,7 +47,9 @@ async function takePhoto(faceCascade, model) {
     const face = await detectHaarFace(mat, faceCascade)
     if (face) {
         resizeImg(makeGray(face))
-        predict(model)
+        const predictions = predict(model);
+        updateChart(chart, predictions)
+        updateEmoji(predictions.indexOf(Math.max(...predictions)))
         face.delete();
     }
 }
@@ -57,8 +59,9 @@ function makeGray(img){
     return gray;
 }
 function resizeImg(img) {
+    const imageSize = 48;
     let dst = new cv.Mat();
-    let dsize = new cv.Size(224, 224);
+    let dsize = new cv.Size(imageSize, imageSize);
     cv.resize(img, dst, dsize, 0, 0, cv.INTER_AREA);
     cv.imshow('canvasOutput', dst);
     dst.delete();

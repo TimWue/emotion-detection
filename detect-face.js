@@ -7,17 +7,25 @@ function detectHaarFace(img, faceCascade) {
     const faces = new cv.RectVector();
     faceCascade.detectMultiScale(gray, faces, 1.1, 3, 0, msize, msize);
 
-   /* for (let i = 0; i < faces.size(); ++i) {
-        const point1 = new cv.Point(faces.get(i).x, faces.get(i).y);
-        const point2 = new cv.Point(
-            faces.get(i).x + faces.get(i).width,
-            faces.get(i).y + faces.get(i).height
-        );
-        cv.rectangle(newImg, point1, point2, [255, 0, 0, 255]);
-    }*/
     let dst = undefined;
     if (faces.size() > 0) {
-        let rect = new cv.Rect(faces.get(0).x, faces.get(0).y, faces.get(0).width, faces.get(0).height);
+
+        // We want a square image
+        let rect = undefined;
+        const width = faces.get(0).width
+        const height = faces.get(0).height;
+        try {
+            if (width > height) {
+                let diff = width - height
+                rect = new cv.Rect(faces.get(0).x, faces.get(0).y - Math.round(diff / 2), width, width);
+            } else {
+                let diff = height - width
+                rect = new cv.Rect(faces.get(0).x - Math.round(diff / 2), faces.get(0).y, height, height);
+            }
+        } catch (e) {
+            console.log("Face detection failed: " + e)
+        }
+
         dst = newImg.roi(rect);
     }
 
