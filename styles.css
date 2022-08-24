@@ -1,7 +1,7 @@
 body {
     margin: 0;
     padding: 0;
-    background-color: #006491 ;
+    background-color: #444 ;
     font-family: Lato,HelveticaNeue,Helvetica,Arial,sans-serif;
     color:white;
 }
@@ -23,6 +23,8 @@ h2 {
     flex-direction: column;
     align-items: center;
     max-width: 100%;
+    gap:10px;
+    padding: 10px;
 }
 
 .classification {
@@ -45,18 +47,18 @@ button{
     height:100px;
     border-radius: 10px;
     border: 5px solid white;
-    background-color: #006491 ;
+    background-color: #444 ;
     color: white;
     font-size: 36px;
 
 }
 button:active{
-    background-color: #003266;
+    background-color: #333;
 
 }
 
 button:hover{
-    background-color: #003266;
+    background-color: #333;
 }
 .stream {
 }
@@ -66,7 +68,7 @@ button:hover{
     top: 50%;
     right: 50%;
     transform: translateX(50%) translateY(-50%);
-    font-size: 72px;
+    font-size: 150px;
 }
 
 .hidden {
