@@ -1,12 +1,14 @@
 <script setup lang="ts">
 import { onBeforeUnmount, onMounted, ref } from "vue";
-import { imread, imshow } from "@techstark/opencv-js";
+import { imread, imshow, Mat } from "@techstark/opencv-js";
 import { detectFace } from "@/services/FaceDetection";
 
 const video = ref<HTMLVideoElement>();
 const hiddenCanvas = ref<HTMLCanvasElement>();
-const faceCanvas = ref<HTMLCanvasElement>();
 const stream = ref<MediaStream>();
+const emits = defineEmits<{
+  (event: "new-frame", frame: Mat): void;
+}>();
 
 const constraints = {
   audio: false,
@@ -17,9 +19,9 @@ const constraints = {
   },
 };
 
-const showFace = () => {
-  if (video.value && hiddenCanvas.value && faceCanvas.value) {
-    let ctx = hiddenCanvas.value.getContext("2d");
+const onFrame = () => {
+  if (video.value && hiddenCanvas.value) {
+    let ctx = hiddenCanvas.value.getContext("2d", { willReadFrequently: true });
     ctx?.drawImage(
       video.value,
       0,
@@ -28,20 +30,15 @@ const showFace = () => {
       hiddenCanvas.value.height
     );
 
-    let mat = imread(hiddenCanvas.value);
-    try {
-      const faceDetection = detectFace(mat);
-      imshow(faceCanvas.value, faceDetection.original);
-    } catch (reason) {
-      console.error(reason);
-    }
+    let frame = imread(hiddenCanvas.value);
+    emits("new-frame", frame);
   }
-  video.value?.requestVideoFrameCallback(showFace);
+  video.value?.requestVideoFrameCallback(onFrame);
 };
 
 onMounted(async () => {
   stream.value = await navigator.mediaDevices.getUserMedia(constraints);
-  video.value?.requestVideoFrameCallback(showFace);
+  video.value?.requestVideoFrameCallback(onFrame);
 });
 
 onBeforeUnmount(() => {
@@ -57,5 +54,4 @@ onBeforeUnmount(() => {
     class="hidden"
   ></video>
   <canvas class="hidden" ref="hiddenCanvas"></canvas>
-  <canvas ref="faceCanvas"></canvas>
 </template>

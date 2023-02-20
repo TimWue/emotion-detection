@@ -1,5 +1,5 @@
 import type { CascadeClassifier } from "@techstark/opencv-js";
-import cv, { Mat } from "@techstark/opencv-js";
+import cv, { imshow, Mat } from "@techstark/opencv-js";
 
 const MAX_TRIES = 10;
 const INTERVAL_TIMEOUT = 2000;
@@ -13,7 +13,7 @@ const loadDataFile = async (cvFilePath: string, url: string) => {
   const data = new Uint8Array(buffer);
   cv.FS_createDataFile("/", cvFilePath, data, true, false, false);
 };
-export const initClassifier = async (): Promise<void> => {
+export const initCascadeClassifier = async (): Promise<void> => {
   return loadDataFile(HAARCASCADE_FILE, "models/" + HAARCASCADE_FILE)
     .then(
       () =>
@@ -50,7 +50,7 @@ export type FaceDetection = {
   roi: Mat;
   original: Mat;
 };
-export const detectFace = (img: any): FaceDetection => {
+export const detectFace = (img: Mat): FaceDetection => {
   if (!faceCascade) throw new Error("No classifier initialized");
   let face = undefined;
   const newImg = img;
