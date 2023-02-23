@@ -14,12 +14,10 @@ export async function initializeModel() {
   console.log("Custom model loaded");
 }
 
-export function predict(src: Mat) {
-  const img = tensor(src.data, [-1, src.rows, src.cols]).expandDims(); //.expandDims(); ?
-  // const resizedImgElement = document.querySelector("#canvasOutput");
-  //const img = browser.fromPixels(resizedImgElement).expandDims();
-  const predictionTensor = classifier.predict(img) as Tensor<Rank>;
-  return tensor2Array(predictionTensor);
+export function predict(canvas: HTMLCanvasElement) {
+  const img = browser.fromPixels(canvas).expandDims();
+  const predictionTensor = classifier.predict(img.cast("float32"));
+  return tensor2Array(predictionTensor as Tensor<Rank>);
 }
 
 function tensor2Array(tensor: Tensor<Rank>) {
