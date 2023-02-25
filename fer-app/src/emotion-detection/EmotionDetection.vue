@@ -1,9 +1,13 @@
 <script setup lang="ts">
-import { ref, watch } from "vue";
-import { faceCanvasId } from "@/global/CanvasIds";
+import { ref } from "vue";
 import { useFaceStore } from "@/global/FaceStore";
 import { predict } from "@/services/ClassifierService";
 import { emojis, labels } from "@/assets/Labels";
+
+defineProps<{
+  emotionCanvasId: string;
+}>();
+
 const threshold = 0.5;
 const canvas = ref<HTMLCanvasElement>();
 const label = ref<string>();
@@ -26,7 +30,7 @@ faceStore.$subscribe((mutation, state) => {
 });
 </script>
 <template>
-  <canvas ref="canvas" :id="faceCanvasId"></canvas>
+  <canvas ref="canvas" :id="emotionCanvasId"></canvas>
   <div>{{ label }}</div>
   <div>{{ percent }}</div>
   <div class="text-9xl">{{ emojy }}</div>
