@@ -30,7 +30,7 @@ faceStore.$subscribe((mutation, state) => {
 });
 </script>
 <template>
-  <canvas ref="canvas" :id="emotionCanvasId"></canvas>
+  <canvas ref="canvas" :id="emotionCanvasId" class="hidden"></canvas>
   <div>{{ label }}</div>
   <div>{{ percent }}</div>
   <div class="text-9xl">{{ emojy }}</div>

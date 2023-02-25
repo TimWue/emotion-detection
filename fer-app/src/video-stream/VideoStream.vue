@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { onBeforeUnmount, onMounted, ref } from "vue";
-import { imread, imshow, Mat } from "@techstark/opencv-js";
-import { detectFace } from "@/services/FaceDetection";
+import { imread, Mat } from "@techstark/opencv-js";
 
 const video = ref<HTMLVideoElement>();
 const hiddenCanvas = ref<HTMLCanvasElement>();
@@ -10,13 +9,9 @@ const emits = defineEmits<{
   (event: "new-frame", frame: Mat): void;
 }>();
 
-const constraints = {
+const constraints: MediaStreamConstraints = {
   audio: false,
-  video: {
-    width: { min: 1024, ideal: 1280, max: 1920 },
-    height: { min: 576, ideal: 720, max: 1080 },
-    facingMode: "user",
-  },
+  video: true,
 };
 
 const onFrame = () => {
@@ -46,12 +41,6 @@ onBeforeUnmount(() => {
 });
 </script>
 <template>
-  <video
-    :srcObject="stream"
-    width="400"
-    autoplay
-    ref="video"
-    class="hidden"
-  ></video>
+  <video :srcObject="stream" autoplay ref="video" class="hidden"></video>
   <canvas class="hidden" ref="hiddenCanvas"></canvas>
 </template>

@@ -20,5 +20,5 @@ const streamCallback = (cvFrame: Mat) => {
 </script>
 <template>
   <VideoStream @new-frame="streamCallback" />
-  <canvas ref="faceCanvas"></canvas>
+  <canvas ref="faceCanvas" class="w-full h-auto"></canvas>
 </template>
