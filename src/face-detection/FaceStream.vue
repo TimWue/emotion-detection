@@ -14,7 +14,7 @@ const streamCallback = (cvFrame: Mat) => {
   if (faceCanvas.value) {
     const face = detectFace(cvFrame);
     imshow(faceCanvas.value, face.original);
-    emits("new-face", face.roi);
+    face.roi && emits("new-face", face.roi);
   }
 };
 </script>

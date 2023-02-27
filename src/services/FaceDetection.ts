@@ -1,5 +1,5 @@
 import type { CascadeClassifier } from "@techstark/opencv-js";
-import cv, { imshow, Mat } from "@techstark/opencv-js";
+import cv, { Mat } from "@techstark/opencv-js";
 
 const MAX_TRIES = 10;
 const INTERVAL_TIMEOUT = 2000;
@@ -47,7 +47,7 @@ export const initCascadeClassifier = async (): Promise<void> => {
 };
 
 export type FaceDetection = {
-  roi: Mat;
+  roi?: Mat;
   original: Mat;
 };
 export const detectFace = (img: Mat): FaceDetection => {
