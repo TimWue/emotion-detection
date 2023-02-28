@@ -60,38 +60,31 @@ export const detectFace = (img: Mat): FaceDetection => {
   const gray = new cv.Mat();
   cv.cvtColor(newImg, gray, cv.COLOR_RGBA2GRAY, 0);
   const faces = new cv.RectVector();
-  faceCascade.detectMultiScale(gray, faces, 1.1, 10, 0, minSize, maxSize);
+  faceCascade.detectMultiScale(gray, faces, 1.1, 5, 0, minSize, maxSize);
 
   if (faces.size() > 0) {
-    // We want a square image
-    let rect = undefined;
-    const width = faces.get(0).width;
-    const height = faces.get(0).height;
-    const diff = Math.abs(width - height);
-    try {
-      if (width > height) {
-        rect = new cv.Rect(
-          faces.get(0).x,
-          faces.get(0).y - Math.round(diff / 2),
-          width,
-          width
-        );
-      } else {
-        rect = new cv.Rect(
-          faces.get(0).x - Math.round(diff / 2),
-          faces.get(0).y,
-          height,
-          height
-        );
-      }
-
-      const point1 = new cv.Point(rect.x, rect.y);
-      const point2 = new cv.Point(rect.x + rect.width, rect.y + rect.height);
-      face = newImg.roi(rect);
-      cv.rectangle(newImg, point1, point2, [255, 0, 0, 255]);
-    } catch (e) {
-      console.log("Face detection failed: " + e);
+    
+    // Take the biggest face
+    const sizes = []
+    for (let i = 0;  i<faces.size();i++){
+      sizes.push(faces.get(i).width * faces.get(i).height)
     }
+    const maxIndex = sizes.indexOf(Math.max(...sizes))
+    // We want a square image
+    const width = faces.get(maxIndex).width;
+    const height = faces.get(maxIndex).height;
+    const diff = Math.abs(width - height);
+    console.log(diff)
+    if (diff > 0) {
+      console.warn("Face is not a square")
+    }
+     const rect = faces.get(maxIndex)
+    
+    const point1 = new cv.Point(rect.x, rect.y);
+    const point2 = new cv.Point(rect.x + rect.width, rect.y + rect.height);
+    face = newImg.roi(rect);
+    cv.rectangle(newImg, point1, point2, [255, 0, 0, 255]);
+    
   }
 
   gray.delete();

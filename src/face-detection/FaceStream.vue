@@ -9,8 +9,10 @@ const emits = defineEmits<{
 }>();
 
 const faceCanvas = ref<HTMLCanvasElement>();
+const debugFace = ref<HTMLCanvasElement>();
 
 const streamCallback = (cvFrame: Mat) => {
+  debugFace.value && imshow(debugFace.value,cvFrame)
   if (faceCanvas.value) {
     const face = detectFace(cvFrame);
     imshow(faceCanvas.value, face.original);
@@ -20,5 +22,5 @@ const streamCallback = (cvFrame: Mat) => {
 </script>
 <template>
   <VideoStream @new-frame="streamCallback" />
-  <canvas ref="faceCanvas" class="w-full h-auto"></canvas>
+  <canvas ref="faceCanvas" class="aspect-square w-full" />
 </template>

@@ -35,7 +35,7 @@ const handleDetectedFace = (face: Mat) => {
     <header>
       <h1>Facial Expression Recognition</h1>
     </header>
-    <main class="w-[500px] flex flex-col justify-center items-center">
+    <main class="md:w-[500px] w-full flex flex-col justify-center items-center">
       <FaceStream
         v-if="cascadeClassifierLoaded && customModelLoaded"
         @new-face="handleDetectedFace"

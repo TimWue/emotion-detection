@@ -9,14 +9,23 @@ const emits = defineEmits<{
   (event: "new-frame", frame: Mat): void;
 }>();
 
+// We want a squared image in order to facilitate displaying in different screen sizes
+const height= 500;
+const width = 500;
 const constraints: MediaStreamConstraints = {
   audio: false,
-  video: true,
+  video: {
+    facingMode:"user",
+    width: { ideal: height },
+    height: { ideal: width }
+    
+  },
 };
 
 const onFrame = () => {
   if (video.value && hiddenCanvas.value) {
     let ctx = hiddenCanvas.value.getContext("2d", { willReadFrequently: true });
+  
     ctx?.drawImage(
       video.value,
       0,
@@ -41,6 +50,6 @@ onBeforeUnmount(() => {
 });
 </script>
 <template>
-  <video :srcObject="stream" autoplay ref="video" class="hidden"></video>
-  <canvas class="hidden" ref="hiddenCanvas"></canvas>
+  <video :srcObject="stream" autoplay ref="video" class="aspect-square hidden"></video>
+  <canvas class="aspect-square hidden" ref="hiddenCanvas" :width="width" :height="height"></canvas>
 </template>
