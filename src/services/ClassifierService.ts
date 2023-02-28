@@ -2,7 +2,7 @@ import { browser, GraphModel, loadGraphModel, Rank, Tensor } from "@tensorflow/t
 
 let classifier: GraphModel;
 export async function initializeModel() {
-  classifier = await loadGraphModel("/models/model.json");
+  classifier = await loadGraphModel(import.meta.env.BASE_URL +"models/model.json");
   console.log("Custom model loaded");
 }
 
