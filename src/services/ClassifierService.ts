@@ -1,16 +1,8 @@
-import {
-  browser,
-  GraphModel,
-  loadGraphModel,
-  Rank,
-  tensor,
-  Tensor,
-} from "@tensorflow/tfjs";
-import type { Mat } from "@techstark/opencv-js";
+import { browser, GraphModel, loadGraphModel, Rank, Tensor } from "@tensorflow/tfjs";
 
 let classifier: GraphModel;
 export async function initializeModel() {
-  classifier = await loadGraphModel("/src/assets/model.json");
+  classifier = await loadGraphModel("/models/model.json");
   console.log("Custom model loaded");
 }
 

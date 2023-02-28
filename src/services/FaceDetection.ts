@@ -14,7 +14,7 @@ const loadDataFile = async (cvFilePath: string, url: string) => {
   cv.FS_createDataFile("/", cvFilePath, data, true, false, false);
 };
 export const initCascadeClassifier = async (): Promise<void> => {
-  return loadDataFile(HAARCASCADE_FILE, "models/" + HAARCASCADE_FILE)
+  return loadDataFile(HAARCASCADE_FILE, "/models/" + HAARCASCADE_FILE)
     .then(
       () =>
         new Promise<void>((resolve, reject) => {
