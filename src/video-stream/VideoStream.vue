@@ -10,8 +10,8 @@ const emits = defineEmits<{
 }>();
 
 // We want a squared image in order to facilitate displaying in different screen sizes
-const height= 500;
-const width = 500;
+const height= 200;
+const width = 200;
 const constraints: MediaStreamConstraints = {
   audio: false,
   video: {

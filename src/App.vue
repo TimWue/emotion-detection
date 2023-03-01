@@ -31,7 +31,7 @@ const handleDetectedFace = (face: Mat) => {
 </script>
 
 <template>
-  <div class="w-screen h-screen flex flex-col items-center">
+  <div class="w-screen h-screen flex flex-col items-center bg-[conic-gradient(at_left,_var(--tw-gradient-stops))] from-yellow-500 via-purple-500 to-blue-500 text-xl font-bold">
     <header>
       <h1>Facial Expression Recognition</h1>
     </header>

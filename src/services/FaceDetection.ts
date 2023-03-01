@@ -74,7 +74,6 @@ export const detectFace = (img: Mat): FaceDetection => {
     const width = faces.get(maxIndex).width;
     const height = faces.get(maxIndex).height;
     const diff = Math.abs(width - height);
-    console.log(diff)
     if (diff > 0) {
       console.warn("Face is not a square")
     }
