@@ -2,41 +2,30 @@
 import { ref } from "vue";
 import { useFaceStore } from "@/global/FaceStore";
 import { predict } from "@/services/ClassifierService";
-import { emojis, labels } from "@/assets/Labels";
+import type { Emotion } from "@/emotion-detection/Emotion";
 
 defineProps<{
   emotionCanvasId: string;
 }>();
 
-const threshold = 0.5;
-const canvas = ref<HTMLCanvasElement>();
-const label = ref<string>();
-const emojy = ref<string>();
-const percent = ref<string>();
+const emits = defineEmits<{
+  (event: "new-emotion", emotion: Emotion): void;
+}>();
 
+const canvas = ref<HTMLCanvasElement>();
 const faceStore = useFaceStore();
-faceStore.$subscribe((mutation, state) => {
+
+faceStore.$subscribe(() => {
   if (canvas.value) {
     const predictions = predict(canvas.value);
     const maxValue = Math.max(...predictions);
     const predictedClass = predictions.indexOf(maxValue);
-
-    percent.value = maxValue.toFixed(2);
-    label.value = labels[predictedClass];
-    if (maxValue > threshold) {
-      emojy.value = String.fromCodePoint(emojis[predictedClass]);
-    }
+    emits("new-emotion", { class: predictedClass, probability: maxValue });
   }
 });
-console.log("new")
 </script>
 <template>
   <div class="w-full">
-  <canvas ref="canvas" :id="emotionCanvasId" class="hidden"></canvas>
-  <div class="grid grid-cols-3 w-full">
-      <div>{{ label }}</div>
-      <div class="justify-self-center">{{ percent }}</div>
-    <div class="text-2xl justify-self-end animate-spin" :style="{animationDelay:'1s'}">{{ emojy }}</div>
-  </div>
+    <canvas ref="canvas" :id="emotionCanvasId" class="hidden"></canvas>
   </div>
 </template>

@@ -12,7 +12,7 @@ const faceCanvas = ref<HTMLCanvasElement>();
 const blurredBackground = ref<HTMLCanvasElement>();
 
 const streamCallback = (cvFrame: Mat) => {
-  blurredBackground.value && imshow(blurredBackground.value, cvFrame)
+  blurredBackground.value && imshow(blurredBackground.value, cvFrame);
   if (faceCanvas.value) {
     const face = detectFace(cvFrame);
     imshow(faceCanvas.value, face.original);
@@ -22,5 +22,9 @@ const streamCallback = (cvFrame: Mat) => {
 </script>
 <template>
   <VideoStream @new-frame="streamCallback" />
-  <canvas ref="faceCanvas" class="aspect-square w-full h-auto rounded-[32px]" :style="{transform: 'scaleX(-1)'}" />
+  <canvas
+    ref="faceCanvas"
+    class="aspect-square w-full h-auto rounded-2xl border"
+    :style="{ transform: 'scaleX(-1)' }"
+  />
 </template>
