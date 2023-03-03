@@ -1,8 +1,11 @@
 <template>
   <header
-    class="w-full h-16 flex flex-row justify-between text-white text-xl px-8 py-4 items-center bg-gray-800 bg-opacity-50"
+    class="w-full h-16 flex flex-row justify-between text-white px-8 py-3 items-center bg-gray-800 bg-opacity-50"
   >
-    <div>Emotion Detection</div>
+    <div class="flex flex-col">
+      <div class="text-xl">Emotion Detection</div>
+      <div class="text-sm text-gray-300">by Tim Wüllner</div>
+    </div>
     <a class="h-full cursor-pointer" href="https://github.com/TimWue/serve.cnn">
       <img
         src="@/assets/github-mark-white.png"
