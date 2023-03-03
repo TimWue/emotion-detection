@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from "vue";
-import { emojis } from "@/assets/Labels";
+import { emojis } from "@/global/EmotionClasses";
 
 const props = defineProps({
   predictedClass: {
@@ -14,7 +14,7 @@ const emoji = computed(() => {
 });
 </script>
 <template>
-  <div :key="predictedClass" class="animate-spin">
+  <div :key="predictedClass" class="animate-flip">
     {{ emoji }}
   </div>
 </template>

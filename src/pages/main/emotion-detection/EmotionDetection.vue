@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { useFaceStore } from "@/global/FaceStore";
-import { predict } from "@/services/ClassifierService";
-import type { Emotion } from "@/emotion-detection/Emotion";
+import { predict } from "@/utils/EmotionClassification";
+import type { Emotion } from "@/domain/Emotion";
 
 defineProps<{
   emotionCanvasId: string;

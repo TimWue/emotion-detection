@@ -1,4 +1,4 @@
-export const labels = [
+export const emotionClasses = [
   "Angry",
   "Disgust",
   "Fear",
