@@ -13,6 +13,7 @@ Additionally real time information about each detected emotion (even if the thre
 shown below the camera stream.
 
 The application is deployed using *github-pages* and is accessable under https://timwue.github.io/emotion-detection/.
+The view is optimized for mobile.
 
 ## Project Setup
 
