@@ -12,6 +12,8 @@ camera stream will show the detected emotion.
 Additionally real time information about each detected emotion (even if the threshold is higher than the probability) is 
 shown below the camera stream.
 
+The application is deployed using *github-pages* and is accessable under https://timwue.github.io/emotion-detection/.
+
 ## Project Setup
 
 ```sh
