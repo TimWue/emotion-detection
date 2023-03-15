@@ -53,8 +53,8 @@ onBeforeUnmount(() => {
     :srcObject="stream"
     autoplay
     ref="video"
-    class="aspect-square hidden"
-    :playsinline="true"
+    class="aspect-square absolute opacity-0 w-10 h-10"
+    playsinline
   ></video>
   <canvas
     class="aspect-square hidden"
